@@ -1,4 +1,3 @@
-# Import Modules
 import os
 import time
 import win32com.client as win32
@@ -45,10 +44,9 @@ class RunExcelMarcos:
             # Launch Excel and Disable Alerts
             excel_app = cc.CreateObject("Excel.Application")
             excel_app.DisplayAlerts = False            
-            excel_app.Application.AutomationSecurity = 1 # Security Setting Level
+            # excel_app.Application.AutomationSecurity = 1 # Security Setting Level
             
             workbook = excel_app.Workbooks.Open(os.path.abspath(self.file_path))
-            if self.refresh_workbook: workbook.RefreshAll()
 
             # Run macro(s) and Sleep between macros
             if self.macros is not None:
@@ -56,13 +54,21 @@ class RunExcelMarcos:
                     excel_app.Run(macro)
                     
                     # Refresh the workbook and Sleep between macros
-                    if self.refresh_workbook: workbook.RefreshAll()
-                    if type(self.sleep_time) is int: time.sleep(self.sleep_time) 
+                    if self.refresh_workbook: 
+                        workbook.RefreshAll()
+                    
+                    if isinstance(self.sleep_time, int): 
+                        time.sleep(self.sleep_time) 
+
                     print(f'{macro} ran successfully and slept for {self.sleep_time} seconds.')
             
             # Refresh and Save the workbook
-            if self.refresh_workbook: workbook.RefreshAll()
-            if self.save_workbook: workbook.Save()
+            if self.refresh_workbook: 
+                workbook.RefreshAll()
+            
+            if self.save_workbook: 
+                workbook.Save()
+            
             return True
 
         except Exception as e: 

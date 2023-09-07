@@ -1,4 +1,3 @@
-# Import Modules
 import os
 import win32com.client as win32
 from datetime import datetime, timedelta
@@ -22,6 +21,8 @@ def make_dir(*args) -> str:
     if not os.path.exists(location):
         os.makedirs(location)
     return location
+
+
 
 def messages_filter(inbox, **kwargs):
     '''
@@ -69,6 +70,8 @@ def messages_filter(inbox, **kwargs):
     
     return messages
 
+
+
 def required_file(filename, file_names) -> bool:
     '''
     Check if filename is required
@@ -89,6 +92,8 @@ def required_file(filename, file_names) -> bool:
         return True if sheet_code[0] in file_names else False
     except: return False 
 
+
+
 def save_attachments(messages, file_names, *directory) -> list[str]:
     ''' 
     Save attachments from Outlook messages to specified folder.
@@ -108,7 +113,8 @@ def save_attachments(messages, file_names, *directory) -> list[str]:
     # Loop through messages and attachments then save files
     for message in messages:
         path = make_dir(
-            *directory, message.CreationTime.strftime('%Y'), message.CreationTime.strftime('%B %Y')
+            *directory, message.CreationTime.strftime('%Y'), 
+            message.CreationTime.strftime('%B %Y')
             )            
         
         for attachment in message.Attachments:
@@ -147,7 +153,7 @@ class SaveEmailAttachments:
 
     def run_function(self, return_saved_files: bool = True) -> list[str] | None:
         '''
-        Run the SaveAttachments which saves attachments from Outlook messages to specified folder
+        Saves attachments from Outlook messages to specified folder
 
         Parameters
         ----------

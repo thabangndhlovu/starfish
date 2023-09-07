@@ -7,14 +7,16 @@ PATH = 'C:\\Users\\Thabang Ndhlovu\\Desktop\\Work\\Projects\\startfish\\'
 DISTRIBUTION = open(f'{PATH}email_distribution.txt').read().split('\n')
 TODAY = datetime.today().strftime("%d %B %Y")
 
+
+
 @dataclass
 class SendEmails:
         '''
         Send emails using Outlook
     
         Parameters
-        ----------S
-        recipients (str): Recipients of the email default is the email distribution list
+        ----------
+        recipients (str): Recipients of the email (default - distribution list)
         subject (str): Subject of the email
         body (str): Body of the email
         attachment (str): Path to attachment
@@ -23,6 +25,7 @@ class SendEmails:
         recipients: str = None
         subject: str = ''
         body: str = ''
+        html_body: str = ''
         attachment: str = None
 
         def __post_init__(self) -> None:
@@ -47,6 +50,7 @@ class SendEmails:
                 mail.To = self.recipients
                 mail.Subject = f'{self.subject} {TODAY}'
                 mail.Body = self.body
+                mail.HTMLBody = self.html_body
                 if self.attachment is not None: 
                     mail.Attachments.Add(self.attachment)
                 mail.Send()

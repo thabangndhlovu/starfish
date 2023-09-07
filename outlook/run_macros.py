@@ -8,13 +8,14 @@ from dataclasses import dataclass
 
 @dataclass
 class RunOutlookMacros:
-    '''Runs Outlook Macros
+    """
+    Runs Macro(s) in Outlook
     
     Parameters
     ----------
     macro_names (str): Name of macro(s) to run
     sleep_time (int): Time to sleep between macros in seconds
-    '''
+    """
     
     macro_names: list[str] | str
     sleep_time: int = None
@@ -33,9 +34,11 @@ class RunOutlookMacros:
             # Initialise Outlook and Run macro(s)
             outlook_app = win32.Dispatch("Outlook.Application")
             
-            for macro in list(self.macro_names):
+            for macro in list([self.macro_names]):
                 outlook_app.Run(macro)
-                if type(self.sleep_time) is int: time.sleep(self.sleep_time)
+                
+                if isinstance(self.sleep_time, int): 
+                    time.sleep(self.sleep_time)
 
             print(f'Macro(s) {self.macro_names} ran successfully!')
             return True
